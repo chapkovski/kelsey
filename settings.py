@@ -113,7 +113,7 @@ SESSION_CONFIGS = [
 
     {
         'name': 'kelseyT0T1',
-        'display_name': 'T0-T1-teting-testing',
+        'display_name': 'T0-T1',
         'num_demo_participants': 1,
         'app_sequence': ['kelsey'],
         'second_half': 'T1'
