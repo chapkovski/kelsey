@@ -28,6 +28,7 @@ class Constants(BaseConstants):
     p = 0.7  # probability of low payoff
     initial_cost = 9
     final_cost = 15
+    treatments = ['T1', 'T2']
     first_decision_labels = {
         'T0': """Do you want to pay an initial investment cost of ${}  with the final
     investment cost determined based on what value payoff
@@ -73,7 +74,11 @@ class Subsession(BaseSubsession):
     def before_session_starts(self):
 
         first_half = self.session.config.get('first_half', 'T0')
+        random_treatment = self.session.config.get('second_half') == 'random'
         second_half = self.session.config.get('second_half', 'T0')
+        for p in self.session.get_participants():
+            if random_treatment:
+                p.vars.setdefault('treatment', random.choice(Constants.treatments))
         for p in self.get_players():
             curpayoffset = (Constants.payoffs_sets.copy())
             random.shuffle(curpayoffset)
@@ -85,14 +90,10 @@ class Subsession(BaseSubsession):
             if p.round_number <= Constants.first_half:
                 p.treatment = first_half
             else:
-                p.treatment = second_half
-                # print('######', len(Player.objects.filter(subsession=self)))
-                # for p in self.get_players():
-                #     p.treatment='yyyy'
-                # import otree.db.idmap
-                # # otree.db.idmap.save_objects()
-                # otree.db.idmap.flush_cache()
-                # Player.objects.filter(subsession=self).update(treatment='ыыыы')
+                if random_treatment:
+                    p.treatment = p.participant.vars.get('treatment')
+                else:
+                    p.treatment = second_half
 
 
 class Group(BaseGroup):
