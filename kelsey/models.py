@@ -29,6 +29,10 @@ class Constants(BaseConstants):
     initial_cost = 9
     final_cost = 15
     treatments = ['T1', 'T2']
+    lottery_choices = sorted(list(range(0, 101, 10)) + [5, 25, 75, 95])
+    len_lottery = len(lottery_choices[1:-1])
+    lotteryA = c(1.25)
+    lotteryB = {'low': c(1), 'high': c(2)}
     first_decision_labels = {
         'T0': """Do you want to pay an initial investment cost of ${}  with the final
     investment cost determined based on what value payoff
@@ -140,8 +144,23 @@ class Player(BasePlayer):
                           (-Constants.initial_cost +
                            self.investment_payoff - Constants.final_cost)
 
+    def set_lottery_payoffs(self):
+        random_lottery = random.randint(1, Constants.len_lottery)
+        self.stage3_chosen_lottery = random_lottery
+        lottery_decision = self.stage3decision[random_lottery]
+        if lottery_decision == 'A':
+            self.stage3_payoff = Constants.lotteryA
+        else:
+            ranges = Constants.lottery_choices[1:-1]
+            lottery_outcome = random.randint(1, 100)
+            self.stage3_picked_number = lottery_outcome
+            if lottery_outcome <= ranges[random_lottery]:
+                self.stage3_payoff = Constants.lotteryB['low']
+            else:
+                self.stage3_payoff = Constants.lotteryB['high']
+        self.payoff += self.stage3_payoff
 
-            # block of survey questions:
+        # block of survey questions:
 
     gender = models.CharField(verbose_name='Gender', choices=['Male', 'Female', 'Other'],
                               widget=widgets.RadioSelectHorizontal, )
@@ -221,4 +240,7 @@ class Player(BasePlayer):
         verbose_name="""Please try to describe what you were thinking when you were making decisions 
         during the study.  What factors entered your decisions? And why did you make the choices you did?""",
         blank=True)
-    stage3decision=models.CharField(doc='to store Stage 3 decision in a form of ordered dictionary')
+    stage3decision = models.CharField(doc='to store Stage 3 decision in a form of ordered dictionary')
+    stage3_chosen_lottery = models.IntegerField()
+    stage3_picked_number = models.IntegerField()
+    stage3_payoff = models.CurrencyField(doc='field to store Stage 3 payoff')

@@ -2,34 +2,60 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-    {% include 'kelsey/title.html' %}: Results
+    Decision Task 3
 {% endblock %}
 
 {% block inner_content %}
+    <div>
+        For this task youhave to make a series of decisions. For each decision you must choose between Option A and
+        Option B. Option A pays you {{ Constants.lotteryA }} for certain. Option B varies across decisions.
+        Initially, Option B gives you a 95 in 100 chance of getting {{ Constants.lotteryB.low }} and 5 in 100 chance of
+        getting {{ Constants.lotteryB.high }}.
+    </div>
+    <div>
+        For each decision please indicate whether you prefer Option A or Option B. Most people begin by preferring
+        Option A and then switch to Option B, so one way to view this task is to determine the row in which you would
+        like to switch from option A to Option B.
+
+    </div>
     <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th><h3>Decision</h3></th>
+            <th><h3>Option A</h3></th>
+            <th><h3>OR</h3></th>
+            <th colspan="2"><h3>Option B</h3></th>
+        </tr>
+        </thead>
         <tbody>
+        <tr>
+            <th colspan="3"></th>
+            <th>Chance of {{ Constants.lotteryB.low }}</th>
+            <th>Chance of {{ Constants.lotteryB.high }}</th>
+        </tr>
         {% for i in data %}
             <tr>
                 <td>{% if i.0 %}{{ i.0 }}{% else %}{% endif %}</td>
+                <td>{{ Constants.lotteryA }}</td>
                 <td>
                     A <input type="radio" name="lottery_{{ i.1 }}" {% if not i.0 %}disabled  {% if i.4 == 'A' %}
                              checked {% endif %}{% endif %} required value="A">
                     <input type="radio" name="lottery_{{ i.1 }}" {% if not i.0 %}disabled  {% if i.4 == 'B' %}
-                           checked {% endif %}{% endif %} required  value="B"> B
+                           checked {% endif %}{% endif %} required value="B"> B
                 </td>
-                <td>{{ i.2 }}</td>
-                <td>{{ i.3 }}</td>
+                <td>{{ i.2 }} in 100</td>
+                <td>{{ i.3 }} in 100</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-    <form>
-        {% csrf_token %}
-        <input type="text" name="privet" id="hello" value="1">
-    </form>
     {% next_button %}
 {% endblock %}
 
 {% block styles %}
-
+    <style>
+        .table td, th {
+            text-align: center;
+        }
+    </style>
 {% endblock %}

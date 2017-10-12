@@ -201,7 +201,7 @@ class Task3(Page):
             if k[:8]=='lottery_':
                 lottery_choices[int(k[8:])]=v
         self.player. stage3decision= dict(OrderedDict(lottery_choices))
-
+        self.player.set_lottery_payoffs()
 
 page_sequence = [
     # Consent,
@@ -216,6 +216,6 @@ page_sequence = [
     # FinalInvestment,
     # Results,
     # Survey,
-    # BeforeTask3,
+    BeforeTask3,
     Task3,
 ]

@@ -2,37 +2,28 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-    {% include 'kelsey/title.html' %}: Results
+    Decision Task 3
 {% endblock %}
 
 {% block inner_content %}
-    <div>To help us with our research, please answer a few questions about yourself. You may leave any question blank
-        that you do not wish to answer, but complete responses are very helpful for our research agenda.
-    </div>
-    {% formfield player.gender %}
-    {% formfield player.nationality %}
-    {% formfield player.nationality_other %}
-    {% formfield player.race_ethnicity %}
-    {% formfield player.race_ethnicity_other %}
-    {% formfield player.major %}
-    {% formfield player.year_in_college %}
-
-    {% formfield player.stock_market_experience %}
-
     <div>
-        Think back to the decisions you made in today’s study. Please answer these questions as honestly as possible.
+        For Decision Task 3 you will choose between two options: Option A and Option B. Option A secures a payment
+        of {{ Constants.lotteryA }}. Option B gives you a gamble with some chance of
+        receiving {{ Constants.lotteryB.low }} and some chance of
+        receiving {{ Constants.lotteryB.high }}.
     </div>
-    {% formfield player.instructions %}
-    {% formfield player.recommendations %}
-    {% formfield player.random_contract %}
-    {% formfield player.random_round %}
-    {% formfield player.easiest %}
-    {% formfield player.end_beginning %}
-    {% formfield player.pleasant %}
-    {% formfield player.thinking %}
+    <div>
+        You will make {{ Constants.len_lottery }} decisions. One decision will count for payment. The decision that
+        counts for payment will be determined by randomly drawing a number between 1 and {{ Constants.len_lottery }}. If
+        you prefer Option A in the selected decision you receive {{ Constants.lotteryA }}. If you prefer option B in
+        the selected decision then we implement the gamble. Suppose Option B is a gamble with a 25 in 100 chance of
+        receiving {{ Constants.lotteryB.low }} and 75 in 100 chance of receiving {{ Constants.lotteryB.high }}. To
+        implement the gamble we randomly choose a number from 1 to 100. If the number is less than or equal to 25 you
+        receive {{ Constants.lotteryB.low }}, if it is between 25 and 100 (inclusive) you
+        receive {{ Constants.lotteryB.high }}.
 
+    </div>
     {% next_button %}
-
 {% endblock %}
 
 {% block styles %}
