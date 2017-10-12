@@ -1,0 +1,35 @@
+{% extends "global/PageExt.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    {% include 'kelsey/title.html' %}: Results
+{% endblock %}
+
+{% block inner_content %}
+    <table class="table table-striped table-hover">
+        <tbody>
+        {% for i in data %}
+            <tr>
+                <td>{% if i.0 %}{{ i.0 }}{% else %}{% endif %}</td>
+                <td>
+                    A <input type="radio" name="lottery_{{ i.1 }}" {% if not i.0 %}disabled  {% if i.4 == 'A' %}
+                             checked {% endif %}{% endif %} required value="A">
+                    <input type="radio" name="lottery_{{ i.1 }}" {% if not i.0 %}disabled  {% if i.4 == 'B' %}
+                           checked {% endif %}{% endif %} required  value="B"> B
+                </td>
+                <td>{{ i.2 }}</td>
+                <td>{{ i.3 }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <form>
+        {% csrf_token %}
+        <input type="text" name="privet" id="hello" value="1">
+    </form>
+    {% next_button %}
+{% endblock %}
+
+{% block styles %}
+
+{% endblock %}

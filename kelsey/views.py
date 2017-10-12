@@ -3,7 +3,7 @@ from . import models
 from ._builtin import Page, WaitPage
 from .models import Constants
 from .forms import ConsentForm
-
+from collections import OrderedDict
 
 class MyPage(Page):
     ...
@@ -177,17 +177,45 @@ class Survey(Page):
         return self.round_number == Constants.num_rounds
 
 
+class BeforeTask3(Page):
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
+    ...
+
+
+class Task3(Page):
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
+    def vars_for_template(self):
+        up = sorted(list(range(0, 101, 10)) + [5, 25, 75, 95])
+        down = list(reversed(up))
+        decisions = [None] + list(range(1, len(up[1:-1]) + 1)) + [None]
+        names = list(range(len(up)))
+        values = ['A'] + [None for i in range(len(up[1:-1]))] + ['B']
+        data = zip(decisions, names, up, down, values, )
+        return {'data': data}
+
+    def before_next_page(self):
+        lottery_choices = {}
+        for k,v in self.request.POST.items():
+            if k[:8]=='lottery_':
+                lottery_choices[int(k[8:])]=v
+        self.player. stage3decision= dict(OrderedDict(lottery_choices))
+
+
 page_sequence = [
-    Consent,
-    Instr1,
-    Instr2,
-    Instr3,
-    Example,
-    Q,
-    QResults,
-    Separ,
-    InitialInvestment,
-    FinalInvestment,
-    Results,
-    Survey,
+    # Consent,
+    # Instr1,
+    # Instr2,
+    # Instr3,
+    # Example,
+    # Q,
+    # QResults,
+    # Separ,
+    # InitialInvestment,
+    # FinalInvestment,
+    # Results,
+    # Survey,
+    # BeforeTask3,
+    Task3,
 ]

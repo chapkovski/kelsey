@@ -1,0 +1,40 @@
+{% extends "global/PageExt.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    {% include 'kelsey/title.html' %}: Results
+{% endblock %}
+
+{% block inner_content %}
+    <div>To help us with our research, please answer a few questions about yourself. You may leave any question blank
+        that you do not wish to answer, but complete responses are very helpful for our research agenda.
+    </div>
+    {% formfield player.gender %}
+    {% formfield player.nationality %}
+    {% formfield player.nationality_other %}
+    {% formfield player.race_ethnicity %}
+    {% formfield player.race_ethnicity_other %}
+    {% formfield player.major %}
+    {% formfield player.year_in_college %}
+
+    {% formfield player.stock_market_experience %}
+
+    <div>
+        Think back to the decisions you made in today’s study. Please answer these questions as honestly as possible.
+    </div>
+    {% formfield player.instructions %}
+    {% formfield player.recommendations %}
+    {% formfield player.random_contract %}
+    {% formfield player.random_round %}
+    {% formfield player.easiest %}
+    {% formfield player.end_beginning %}
+    {% formfield player.pleasant %}
+    {% formfield player.thinking %}
+
+    {% next_button %}
+
+{% endblock %}
+
+{% block styles %}
+
+{% endblock %}

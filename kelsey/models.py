@@ -221,3 +221,4 @@ class Player(BasePlayer):
         verbose_name="""Please try to describe what you were thinking when you were making decisions 
         during the study.  What factors entered your decisions? And why did you make the choices you did?""",
         blank=True)
+    stage3decision=models.CharField(doc='to store Stage 3 decision in a form of ordered dictionary')
