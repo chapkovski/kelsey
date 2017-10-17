@@ -8,6 +8,7 @@ from itertools import product
 import csv
 from collections import OrderedDict
 from django import forms as djforms
+import json
 
 author = 'Philipp Chapkovski, UZH'
 
@@ -19,10 +20,10 @@ Kelsey-Oliva lottery game
 class Constants(BaseConstants):
     name_in_url = 'kelsey'
     players_per_group = None
-    num_rounds = 18
+    num_rounds = 2
     # till what round we play T0 and then change to whatever treatment
     # we have?::
-    first_half = 9
+    first_half = 1
     second_half = first_half + 1
     assert first_half <= num_rounds, "SOMETHING WRONG WITH NUMBER OF ROUNDS!"
     p = 0.7  # probability of low payoff
@@ -118,6 +119,10 @@ class Player(BasePlayer):
         investment cost of ${} to
          release this payoff?""".format(Constants.final_cost)
     )
+    temporary_payoff = models.CurrencyField(initial=0,
+                                            doc="""its where we store the copies of our payoffs, 
+            because we delete the payoffs in the very last round for randomization""")
+    round_to_pay = models.IntegerField(min=1, max=Constants.num_rounds)
     # set of control questions for each treatment
 
     for i in Constants.questions:
@@ -125,29 +130,27 @@ class Player(BasePlayer):
                                                 widget=widgets.RadioSelectHorizontal(),
                                                 choices=[i['option1'], i['option2']])
 
-    # filtered_dict = {k:v for (k,v) in d.items() if filter_string in k}
+        # filtered_dict = {k:v for (k,v) in d.items() if filter_string in k}
 
-    #  END OF set of control questions for each treatment
+        #  END OF set of control questions for each treatment
 
     def set_payoffs(self):
         if self.treatment == 'T0':
-            self.payoff = self.first_decision * \
-                          (-Constants.initial_cost +
-                           max(self.investment_payoff - Constants.final_cost, 0))
+            self.temporary_payoff = self.first_decision * (-Constants.initial_cost +
+                                                           max(self.investment_payoff - Constants.final_cost, 0))
         if self.treatment == 'T1':
-            self.payoff = self.first_decision * \
-                          (-Constants.initial_cost +
-                           (self.investment_payoff - Constants.final_cost) *
-                           (self.second_decision or 0))
+            self.temporary_payoff = self.first_decision * (-Constants.initial_cost +
+                                                           (self.investment_payoff - Constants.final_cost) *
+                                                           self.second_decision)
         if self.treatment == 'T2':
-            self.payoff = self.first_decision * \
-                          (-Constants.initial_cost +
-                           self.investment_payoff - Constants.final_cost)
+            self.temporary_payoff = self.first_decision * (
+                - Constants.initial_cost + self.investment_payoff - Constants.final_cost)
 
     def set_lottery_payoffs(self):
         random_lottery = random.randint(1, Constants.len_lottery)
         self.stage3_chosen_lottery = random_lottery
-        lottery_decision = self.stage3decision[random_lottery]
+        stage3decision = json.loads(str(self.stage3decision))
+        lottery_decision = stage3decision[str(random_lottery)]
         if lottery_decision == 'A':
             self.stage3_payoff = Constants.lotteryA
         else:
@@ -158,8 +161,12 @@ class Player(BasePlayer):
                 self.stage3_payoff = Constants.lotteryB['low']
             else:
                 self.stage3_payoff = Constants.lotteryB['high']
-        self.payoff += self.stage3_payoff
 
+    def set_final_payoff(self):
+        self.round_to_pay = random.randint(1, Constants.num_rounds)
+        self.payoff = self.in_round(self.round_to_pay).temporary_payoff
+        self.set_lottery_payoffs()
+        self.payoff += self.stage3_payoff
         # block of survey questions:
 
     gender = models.CharField(verbose_name='Gender', choices=['Male', 'Female', 'Other'],

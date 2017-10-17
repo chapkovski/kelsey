@@ -1,0 +1,51 @@
+{% extends "global/PageExt.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Payoffs
+{% endblock %}
+
+{% block inner_content %}
+    <table class="table table-striped table-hover table-responsive">
+        <tbody>
+        <tr>
+            <td>The random period that was chosen for payment:</td>
+            <td>{{ player.round_to_pay }}</td>
+        </tr>
+
+        <tr>
+            <td>Your payoff for this round is:</td>
+            <td>{{ payoff_for_game }}</td>
+        </tr>
+        <tr>
+            <td>In stage 3 the lottery randomly chosen for payment is:</td>
+            <td> {{ player.stage3_chosen_lottery }} </td>
+
+        </tr>
+        <tr>
+            <td>In this lottery you chose option:</td>
+            <td>{{ lottery_decision }}</td>
+        </tr>
+
+        {% if lottery_decision == 'B' %}
+            <tr>
+                <td>The random number generated was:</td>
+                <td>{{ player.stage3_picked_number }}</td>
+            </tr>
+        {% endif %}
+        <tr>
+            <td>So your payoff for Stage 3 is:</td>
+            <td>{{ player.stage3_payoff }}</td>
+        </tr>
+        <tr>
+            <th class="success">Your total payoff is:</th>
+            <th class="success">{{ player.payoff }}</th>
+        </tr>
+        </tbody>
+    </table>
+    {% next_button %}
+{% endblock %}
+
+{% block styles %}
+
+{% endblock %}

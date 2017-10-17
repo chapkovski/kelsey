@@ -1,48 +1,51 @@
-
 <table class="table table-hover table-striped">
-  <thead><tr><th colspan=3>
-    Your earnings in this round:
-  </th></tr></thead>
-  <tbody>
+    <thead>
+    <tr>
+        <th colspan=3>
+            Your earnings in this round:
+        </th>
+    </tr>
+    </thead>
+    <tbody>
     {% if first_decision %}
-<tr>
-  <td>Initial investment: </td>
-  <td>  <h5>
-    <span class="glyphicon glyphicon-minus red" aria-hidden="true"></span>
-    <span class="sr-only">Minus</span>
-  </h5></td>
-  <td>{{Constants.initial_cost}}</td>
-</tr>
+        <tr>
+            <td>Initial investment:</td>
+            <td><h5>
+                <span class="glyphicon glyphicon-minus red" aria-hidden="true"></span>
+                <span class="sr-only">Minus</span>
+            </h5></td>
+            <td>{{ Constants.initial_cost }}</td>
+        </tr>
 
-    {% if show_final_investment_block %}
-<tr>
+        {% if show_final_investment_block %}
+            <tr>
 
-  <td>Investment payoff:</td>
-  <td> <h5>
-    <span class="glyphicon glyphicon-plus green" aria-hidden="true"></span>
-    <span class="sr-only">Plus</span>
-  </h5> </td>
-  <td>{{investment_payoff|default:player.investment_payoff}}</td>
-</tr>
-<td>Final investment: </td>
-<td>  <h5>
-  <span class="glyphicon glyphicon-minus red" aria-hidden="true"></span>
-  <span class="sr-only">Minus</span>
-</h5></td>
-<td>{{Constants.final_cost}}</td>
-</tr>
-{% endif %}
-{% endif %}
-<tr>
-      {% if first_decision %}
-  <th > </th>
-  <th > <h5>
-    =
-  </h5> </th>
-{% endif %}
-  <th >{{payoff|default:player.payoff}}</th>
-</tr>
+                <td>Investment payoff:</td>
+                <td><h5>
+                    <span class="glyphicon glyphicon-plus green" aria-hidden="true"></span>
+                    <span class="sr-only">Plus</span>
+                </h5></td>
+                <td>{{ investment_payoff|default:player.investment_payoff }}</td>
+            </tr>
+            <td>Final investment:</td>
+            <td><h5>
+                <span class="glyphicon glyphicon-minus red" aria-hidden="true"></span>
+                <span class="sr-only">Minus</span>
+            </h5></td>
+            <td>{{ Constants.final_cost }}</td>
+            </tr>
+        {% endif %}
+    {% endif %}
+    <tr>
+        {% if first_decision %}
+            <th></th>
+            <th><h5>
+                =
+            </h5></th>
+        {% endif %}
+        <th>{{ payoff|default:player.temporary_payoff }}</th>
+    </tr>
 
 
-</tbody>
+    </tbody>
 </table>

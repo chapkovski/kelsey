@@ -2,8 +2,10 @@ from otree.api import Currency as c, currency_range
 from . import models
 from ._builtin import Page, WaitPage
 from .models import Constants
-from .forms import ConsentForm
 from collections import OrderedDict
+import random
+import json
+
 
 class MyPage(Page):
     ...
@@ -35,6 +37,21 @@ def what_to_highlight(p):
         'prob_realized': True,
         'modal_shown': True,
     }
+
+
+class LastPage(Page):
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
+
+
+class InstrPage(MyPage):
+    def is_displayed(self):
+        return self.extra_displayed and (self.round_number == 1 or
+                                         self.round_number ==
+                                         Constants.second_half)
+
+    def extra_displayed(self):
+        return True
 
 
 class InitialInvestment(MyPage):
@@ -81,15 +98,6 @@ class Results(MyPage):
 
 
 # INSTRUCTIONS AND QS BLOCK
-class InstrPage(MyPage):
-    def is_displayed(self):
-        return self.extra_displayed and (self.round_number == 1 or
-                                         self.round_number ==
-                                         Constants.second_half)
-
-    def extra_displayed(self):
-        return True
-
 
 class FirstRoundPage(MyPage):
     def is_displayed(self):
@@ -151,7 +159,7 @@ class QResults(InstrPage):
         return {'data': data}
 
 
-class Survey(Page):
+class Survey(LastPage):
     form_model = models.Player
     form_fields = [
         'gender',
@@ -173,49 +181,53 @@ class Survey(Page):
         'thinking',
     ]
 
-    def is_displayed(self):
-        return self.round_number == Constants.num_rounds
 
-
-class BeforeTask3(Page):
-    def is_displayed(self):
-        return self.round_number == Constants.num_rounds
+class BeforeTask3(LastPage):
     ...
 
 
-class Task3(Page):
-    def is_displayed(self):
-        return self.round_number == Constants.num_rounds
+class Task3(LastPage):
     def vars_for_template(self):
         up = sorted(list(range(0, 101, 10)) + [5, 25, 75, 95])
         down = list(reversed(up))
         decisions = [None] + list(range(1, len(up[1:-1]) + 1)) + [None]
         names = list(range(len(up)))
-        values = ['A'] + [None for i in range(len(up[1:-1]))] + ['B']
+        values = ['B'] + [None for i in range(len(up[1:-1]))] + ['A']
         data = zip(decisions, names, up, down, values, )
         return {'data': data}
 
     def before_next_page(self):
+
         lottery_choices = {}
-        for k,v in self.request.POST.items():
-            if k[:8]=='lottery_':
-                lottery_choices[int(k[8:])]=v
-        self.player. stage3decision= dict(OrderedDict(lottery_choices))
-        self.player.set_lottery_payoffs()
+        for k, v in self.request.POST.items():
+            if k[:8] == 'lottery_':
+                lottery_choices[int(k[8:])] = v
+        self.player.stage3decision = json.dumps(dict(OrderedDict(lottery_choices)))
+        self.player.set_final_payoff()
+
+
+class ShowPayoff(LastPage):
+    def vars_for_template(self):
+        payoff_for_game = self.player.in_round(self.player.round_to_pay).temporary_payoff
+        stage3decision = json.loads(str(self.player.stage3decision))
+        return {'lottery_decision': stage3decision[str(self.player.stage3_chosen_lottery)],
+                'payoff_for_game': payoff_for_game}
+
 
 page_sequence = [
-    Consent,
-    Instr1,
-    Instr2,
-    Instr3,
-    Example,
-    Q,
-    QResults,
-    Separ,
+    # Consent,
+    # Instr1,
+    # Instr2,
+    # Instr3,
+    # Example,
+    # Q,
+    # QResults,
+    # Separ,
     InitialInvestment,
     FinalInvestment,
     Results,
-    Survey,
+    # Survey,
     BeforeTask3,
     Task3,
+    ShowPayoff,
 ]
