@@ -113,8 +113,20 @@ class Consent(FirstRoundPage):
             return 'You must accept the consent form'
 
 
+def instr_and_payoff_vars(session):
+    rate = session.config['real_world_currency_per_point']
+    if rate < 1:
+        show_rate = '{} cents'.format(round(rate * 100))
+    else:
+        show_rate = '${}'.format(rate)
+    return {'part_fee_in_points': c(session.config['participation_fee_in_points']),
+            'show_rate': show_rate,
+            }
+
+
 class Instr1(FirstRoundPage):
-    ...
+    def vars_for_template(self):
+        return instr_and_payoff_vars(self.session)
 
 
 class Instr2(FirstRoundPage):
@@ -208,10 +220,22 @@ class Task3(LastPage):
 
 class ShowPayoff(LastPage):
     def vars_for_template(self):
-        payoff_for_game = self.player.in_round(self.player.round_to_pay).temporary_payoff
+        vars_payoff = instr_and_payoff_vars(self.session)
+        payoff_p1 = self.player.in_round(self.player.round_to_pay_part1).temporary_payoff
+        payoff_p2= self.player.in_round(self.player.round_to_pay_part2).temporary_payoff
+        payoff_p1_us = payoff_p1.to_real_world_currency(self.session)
+        payoff_p2_us = payoff_p2.to_real_world_currency(self.session)
         stage3decision = json.loads(str(self.player.stage3decision))
-        return {'lottery_decision': stage3decision[str(self.player.stage3_chosen_lottery)],
-                'payoff_for_game': payoff_for_game}
+        lottery_payoff_us = self.player.stage3_payoff.to_real_world_currency(self.session)
+        vars_payoff.update({'lottery_decision': stage3decision[str(self.player.stage3_chosen_lottery)],
+                            'participant_payoff_points': c(self.participant.payoff_plus_participation_fee()/self.session.config['real_world_currency_per_point']),
+                            'payoff_p1':payoff_p1,
+                            'payoff_p2': payoff_p2,
+                            'payoff_p1_us': payoff_p1_us,
+                            'payoff_p2_us': payoff_p2_us,
+                            'lottery_payoff_us':lottery_payoff_us,
+        })
+        return vars_payoff
 
 
 page_sequence = [

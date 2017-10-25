@@ -6,43 +6,58 @@
 {% endblock %}
 
 {% block inner_content %}
+    <div class="well well-lg">
+        As stated in the instructions, your final payoff includes your show up fee ({{ part_fee_in_points }}) plus your
+        earned points
+        from two randomly selected rounds: one from Part 1 and one from Part 2. The points of these two rounds and the
+        show up fee were added together and then converted to dollars at a rate of {{ show_rate }} per point. In
+        addition, you
+        earned some additional points from the compensated survey questions. These points will be converted to dollars
+        using the same rate.
+    </div>
     <table class="table table-striped table-hover table-responsive">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Points</th>
+            <th>Dollars</th>
+        </tr>
+        </thead>
         <tbody>
         <tr>
-            <td>The random period that was chosen for payment:</td>
-            <td>{{ player.round_to_pay }}</td>
-        </tr>
-
-        <tr>
-            <td>Your payoff for this round is:</td>
-            <td>{{ payoff_for_game }}</td>
+            <td>Your show up fee</td>
+            <td>{{ part_fee_in_points }}</td>
+            <td>{{ session.config.participation_fee }}</td>
         </tr>
         <tr>
-            <td>In stage 3 the lottery randomly chosen for payment is:</td>
-            <td> {{ player.stage3_chosen_lottery }} </td>
-
+            <td>The random round selected for payment in Part 1 was <strong>#{{ player.round_to_pay_part1 }}</strong>
+            </td>
+            <td>{{ payoff_p1 }}</td>
+            <td>{{ payoff_p1_us }}</td>
         </tr>
         <tr>
-            <td>In this lottery you chose option:</td>
-            <td>{{ lottery_decision }}</td>
+            <td>The random round selected for payment in Part 2 was <strong>#{{ player.round_to_pay_part2 }}</strong></td>
+            <td>{{ payoff_p2 }}</td>
+            <td>{{ payoff_p2_us }}</td>
         </tr>
-
-        {% if lottery_decision == 'B' %}
-            <tr>
-                <td>The random number generated was:</td>
-                <td>{{ player.stage3_picked_number }}</td>
-            </tr>
-        {% endif %}
         <tr>
-            <td>So your payoff for Stage 3 is:</td>
+            <td>The randomly selected lottery in the Compensated Survey Questions was
+                row {{ player.stage3_chosen_lottery }}</td>
             <td>{{ player.stage3_payoff }}</td>
+            <td>{{ lottery_payoff_us }}</td>
         </tr>
-        <tr>
-            <th class="success">Your total payoff is:</th>
-            <th class="success">{{ player.payoff }}</th>
+
+        <tr class="success final_row">
+            <th> Your total payoff is:</th>
+            <th>{{ participant_payoff_points }}</th>
+            <th>{{ participant.payoff_plus_participation_fee }}</th>
+
         </tr>
+
+
         </tbody>
     </table>
+
     {% next_button %}
 {% endblock %}
 

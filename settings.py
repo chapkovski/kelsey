@@ -6,7 +6,6 @@ from boto.mturk import qualification
 
 import otree.settings
 
-
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # the environment variable OTREE_PRODUCTION controls whether Django runs in
@@ -54,11 +53,10 @@ AUTH_LEVEL = environ.get('OTREE_AUTH_LEVEL')
 AWS_ACCESS_KEY_ID = environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = environ.get('AWS_SECRET_ACCESS_KEY')
 
-
 # e.g. EUR, CAD, GBP, CHF, CNY, JPY
 REAL_WORLD_CURRENCY_CODE = 'USD'
-USE_POINTS = False
-
+USE_POINTS = True
+POINTS_DECIMAL_PLACES = 2
 
 # e.g. en, de, fr, it, ja, zh-hans
 # see: https://docs.djangoproject.com/en/1.9/topics/i18n/#term-language-code
@@ -86,7 +84,7 @@ mturk_hit_settings = {
     'frame_height': 500,
     'preview_template': 'global/MTurkPreview.html',
     'minutes_allotted_per_assignment': 60,
-    'expiration_hours': 7*24,  # 7 days
+    'expiration_hours': 7 * 24,  # 7 days
     # 'grant_qualification_id': 'YOUR_QUALIFICATION_ID_HERE',# to prevent retakes
     'qualification_requirements': [
         # qualification.LocaleRequirement("EqualTo", "US"),
@@ -101,13 +99,17 @@ mturk_hit_settings = {
 # the session config can be accessed from methods in your apps as self.session.config,
 # e.g. self.session.config['participation_fee']
 
+participation_fee_in_points = 62
+real_world_currency_per_point = 0.5
+participation_fee = participation_fee_in_points * real_world_currency_per_point
+
 SESSION_CONFIG_DEFAULTS = {
-    'real_world_currency_per_point': 0.000,
-    'participation_fee': 0.00,
+    'real_world_currency_per_point': real_world_currency_per_point,
+    'participation_fee_in_points': participation_fee_in_points,
+    'participation_fee': participation_fee,
     'doc': "",
     'mturk_hit_settings': mturk_hit_settings,
 }
-
 
 SESSION_CONFIGS = [
 

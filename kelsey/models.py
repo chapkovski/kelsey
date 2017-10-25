@@ -32,8 +32,8 @@ class Constants(BaseConstants):
     treatments = ['T1', 'T2']
     lottery_choices = sorted(list(range(0, 101, 10)) + [5, 25, 75, 95])
     len_lottery = len(lottery_choices[1:-1])
-    lotteryA = c(1.25)
-    lotteryB = {'low': c(1), 'high': c(2)}
+    lotteryA = c(2.50)
+    lotteryB = {'low': c(2), 'high': c(4)}
     first_decision_labels = {
         'T0': """Do you want to pay an initial investment cost of ${}  with the final
     investment cost determined based on what value payoff
@@ -122,7 +122,10 @@ class Player(BasePlayer):
     temporary_payoff = models.CurrencyField(initial=0,
                                             doc="""its where we store the copies of our payoffs, 
             because we delete the payoffs in the very last round for randomization""")
-    round_to_pay = models.IntegerField(min=1, max=Constants.num_rounds)
+    round_to_pay_part1 = models.IntegerField(min=1, max=Constants.first_half,
+                                             doc='Random number defining payoff for the first part of the game')
+    round_to_pay_part2 = models.IntegerField(min=Constants.second_half, max=Constants.num_rounds,
+                                             doc='Random number defining payoff for the second part of the game')
     # set of control questions for each treatment
 
     for i in Constants.questions:
@@ -163,8 +166,10 @@ class Player(BasePlayer):
                 self.stage3_payoff = Constants.lotteryB['high']
 
     def set_final_payoff(self):
-        self.round_to_pay = random.randint(1, Constants.num_rounds)
-        self.payoff = self.in_round(self.round_to_pay).temporary_payoff
+        self.round_to_pay_part1 = random.randint(1, Constants.first_half)
+        self.round_to_pay_part2 = random.randint(Constants.second_half, Constants.num_rounds)
+        self.payoff = self.in_round(self.round_to_pay_part1).temporary_payoff + self.in_round(
+            self.round_to_pay_part2).temporary_payoff
         self.set_lottery_payoffs()
         self.payoff += self.stage3_payoff
         # block of survey questions:
