@@ -20,9 +20,9 @@
 
 
         <li class="list-group-item">
-            With {{ p }}% probability, you will receive ${{ Constants.q_parameters.low_payoff }}.
-            Since the payoff of ${{ Constants.q_parameters.low_payoff }} is less than the
-            final investment cost of ${{ Constants.q_parameters.final_cost }},
+            With {{ p }}% probability, you will receive {{ Constants.q_parameters.low_payoff|c }}.
+            Since the payoff of {{ Constants.q_parameters.low_payoff|c }} is less than the
+            final investment cost of {{ Constants.q_parameters.final_cost|c }},
             you will not be charged the final investment cost.
             So you will see the following:
             <div class="well">{% include 'kelsey/result_block.html' with first_decision=1 investment_payoff=Constants.q_parameters.low_payoff show_final_investment_block=0 payoff=Constants.q_parameters.initial_cost|inv %}</div>
@@ -31,10 +31,10 @@
 
         <li class="list-group-item">
             with {{ p_1 }}% chance, you will
-            receive ${{ Constants.q_parameters.high_payoff }}.
-            Since the payoff of ${{ Constants.q_parameters.high_payoff }}
+            receive {{ Constants.q_parameters.high_payoff|c }}.
+            Since the payoff of {{ Constants.q_parameters.high_payoff|c }}
             is greater than the final
-            investment cost of ${{ Constants.q_parameters.final_cost }},
+            investment cost of {{ Constants.q_parameters.final_cost|c }},
             so you will be charged the final investment cost.
             So you will see the following:
             <div class="well">
@@ -66,13 +66,13 @@
         <li class="list-group-item">
             <p>With {{ p }}% chance, you will receive {{ Constants.q_parameters.low_payoff }}.</p>
             <p>With {{ p_1 }}% chance, you will
-                receive {{ Constants.q_parameters.high_payoff }}.</p>
+                receive {{ Constants.q_parameters.high_payoff|c }}.</p>
             You will then be asked to make the following decision:
             {% include 'kelsey/example_second_decision.html' %}
 
-            <p>For example, let's say you receive payoff of ${{ Constants.q_parameters.high_payoff }} and
+            <p>For example, let's say you receive payoff of {{ Constants.q_parameters.high_payoff|c }} and
                 you chose to pay the final
-                investment cost of ${{ Constants.q_parameters.final_cost }} to
+                investment cost of {{ Constants.q_parameters.final_cost|c }} to
                 release this payoff.</p>
             <p>Then you will see the following:</p>
 

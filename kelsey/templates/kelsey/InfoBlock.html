@@ -75,8 +75,9 @@
                         <h4 class="modal-title">Investment payoff</h4>
                     </div>
                     <div class="modal-body">
-                        <p>The random number generator has determined that the payoff for this investment is
-                            <b>${{ player.investment_payoff }}</b></p>
+                        <p>The random number generator has determined that the potential payoff for this investment is
+                            <b>{{ player.investment_payoff|c }}.</b></p>
+                        <p><i>At the end of the entire session two contracts will be chosen for pay, one from each Part.</i></p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

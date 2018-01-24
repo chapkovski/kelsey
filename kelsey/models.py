@@ -35,13 +35,13 @@ class Constants(BaseConstants):
     lotteryA = c(2.50)
     lotteryB = {'low': c(2), 'high': c(4)}
     first_decision_labels = {
-        'T0': """Do you want to pay an initial investment cost of ${}  with the final
+        'T0': """Do you want to pay an initial investment cost of {}  with the final
     investment cost determined based on what value payoff
-    is drawn?""".format(initial_cost),
-        'T1': """Do you want to pay an initial investment cost of ${} to
-    take this contract?""".format(initial_cost),
-        'T2': """Do you want to pay an initial investment cost of ${} and a final investment
-     cost of ${} to release the randomly determined payoff?""".format(initial_cost, final_cost),
+    is drawn?""".format(c(initial_cost)),
+        'T1': """Do you want to pay an initial investment cost of {} to
+    take this contract?""".format(c(initial_cost)),
+        'T2': """Do you want to pay an initial investment cost of {} and a final investment
+     cost of {} to release the randomly determined payoff?""".format(c(initial_cost), c(final_cost)),
     }
     low_payoff_set = [0, 6, 12]
     high_payoff_set = [24, 36, 54]
@@ -54,6 +54,8 @@ class Constants(BaseConstants):
                     'PT0ExampleHigh': 16,
                     'PT0ExampleLow': -16,
                     }
+    for key, value in q_parameters.items():
+        q_parameters[key] = c(value)
     with open('kelsey/qs_to_add.csv') as f:
         questions = list(csv.DictReader(f))
     for q in questions:
@@ -104,7 +106,11 @@ class Subsession(BaseSubsession):
 class Group(BaseGroup):
     pass
 
-
+CONFIDENT_CHOICES = ['Very Confident',
+                     'Confident',
+                     'Somewhat Unconfident',
+                     'Unconfident',
+                     ]
 class Player(BasePlayer):
     consent = models.BooleanField(widget=djforms.CheckboxInput,
                                   initial=False
@@ -191,7 +197,7 @@ class Player(BasePlayer):
                                       widget=widgets.RadioSelect, )
     race_ethnicity_other = models.CharField(verbose_name='', blank=True)
     major = models.CharField(verbose_name='Major', blank=True)
-    year_in_college = models.CharField(verbose_name='Year in College', choices=[
+    year_in_college = models.CharField(verbose_name='If you are currently in school, what year are you in?', choices=[
         'Freshman/First-Year ',
         'Sophomore',
         'Junior',
@@ -214,11 +220,7 @@ class Player(BasePlayer):
     recommendations = models.CharField(verbose_name='Do you have any recommendations for improvements?',
                                        blank=True)
 
-    CONFIDENT_CHOICES = ['Very Confident',
-                         'Confident',
-                         'Somewhat Unconfident',
-                         'Unconfident',
-                         ]
+
 
     random_contract = models.CharField(
         verbose_name='How confident were you that the experimenters truly randomized the payoff of each contract based on the stated probabilities?',
