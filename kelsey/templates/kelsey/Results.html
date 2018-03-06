@@ -6,28 +6,30 @@
 {% endblock %}
 
 {% block inner_content %}
-{% include 'kelsey/InfoBlock.html' %}
-{% include 'kelsey/result_block.html' with first_decision=player.first_decision %}
+    {% include 'kelsey/InfoBlock.html'  with show_payoff_in_modal=True %}
+    {% include 'kelsey/result_block.html' with first_decision=player.first_decision %}
 
     {% next_button %}
     {% include 'kelsey/slider_wrapper.html' %}
 {% endblock %}
 
 {% block styles %}
-<style>
-.red{
-    color: red;
-}
-.green{
-    color: green;
-}
+    <style>
+        .red {
+            color: red;
+        }
 
-.blue {
-    color: blue;
-}
-.table > tbody > tr > td {
-     vertical-align: middle;
-}
-</style>
+        .green {
+            color: green;
+        }
+
+        .blue {
+            color: blue;
+        }
+
+        .table > tbody > tr > td {
+            vertical-align: middle;
+        }
+    </style>
 
 {% endblock %}

@@ -67,26 +67,24 @@
     </div>
     {% if prob_realized and modal_shown %}
         <div class="modal fade" tabindex="-1" role="dialog" id='myModal'>
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Investment payoff</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>
-                            The random number generator has determined that the payoff for this investment
-                            is {{ player.investment_payoff|c }}.
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Investment payoff</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        The random number generator has determined that the payoff for this investment
+                        is {{ player.investment_payoff|c }}.
+                        {% if show_payoff_in_modal %}
                             Remember that at the end of the entire session, two contracts will be chosen for pay, one
-                            from each Part. If this contract is chosen, it will contribute Y (total payoff in contract)
-                        </p>
-                        <p>TODELETE::::The random number generator has determined that the potential payoff for this
-                            investment is
-                            <b>{{ player.investment_payoff|c }}.</b></p>
-                        <p><i>At the end of the entire session two contracts will be chosen for pay, one from each
-                            Part.</i></p>
-                    </div>
+                            from each Part. If this contract is chosen, it will contribute
+                            {{ player.temporary_payoff|c }}.
+                        {% endif %}
+                    </p>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
@@ -96,71 +94,71 @@
         </div><!-- /.modal -->
     {% endif %}
 
-</div>
-<script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
-</script>
-{% if prob_realized %}
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
-            integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
-            crossorigin="anonymous"></script>
+    </div>
     <script>
-        $('#myModal').modal('toggle');
-        $(document).ready(function () {
-            var probs = $('.probs');
-            probs.html("");
-        });
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
     </script>
+    {% if prob_realized %}
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+                integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+                crossorigin="anonymous"></script>
+        <script>
+            $('#myModal').modal('toggle');
+            $(document).ready(function () {
+                var probs = $('.probs');
+                probs.html("");
+            });
+        </script>
 
-    <style>
-        @-webkit-keyframes invalid {
-            from {
-                background-color: #dff0d8;
+        <style>
+            @-webkit-keyframes invalid {
+                from {
+                    background-color: #dff0d8;
+                }
+                to {
+                    background-color: inherit;
+                }
             }
-            to {
-                background-color: inherit;
-            }
-        }
 
-        @-moz-keyframes invalid {
-            from {
-                background-color: #dff0d8;
+            @-moz-keyframes invalid {
+                from {
+                    background-color: #dff0d8;
+                }
+                to {
+                    background-color: inherit;
+                }
             }
-            to {
-                background-color: inherit;
-            }
-        }
 
-        @-o-keyframes invalid {
-            from {
-                background-color: #dff0d8;
+            @-o-keyframes invalid {
+                from {
+                    background-color: #dff0d8;
+                }
+                to {
+                    background-color: inherit;
+                }
             }
-            to {
-                background-color: inherit;
+
+            @keyframes invalid {
+                from {
+                    background-color: #dff0d8;
+                }
+                to {
+                    background-color: inherit;
+                }
             }
-        }
 
-        @keyframes invalid {
-            from {
-                background-color: #dff0d8;
+            .invalid {
+                -webkit-animation: invalid 1s infinite; /* Safari 4+ */
+                -moz-animation: invalid 1s infinite; /* Fx 5+ */
+                -o-animation: invalid 1s infinite; /* Opera 12+ */
+                animation: invalid 1s infinite; /* IE 10+ */
             }
-            to {
-                background-color: inherit;
+
+            td {
+                /*padding: 1em;*/
             }
-        }
 
-        .invalid {
-            -webkit-animation: invalid 1s infinite; /* Safari 4+ */
-            -moz-animation: invalid 1s infinite; /* Fx 5+ */
-            -o-animation: invalid 1s infinite; /* Opera 12+ */
-            animation: invalid 1s infinite; /* IE 10+ */
-        }
-
-        td {
-            /*padding: 1em;*/
-        }
-
-    </style>
-{% endif %}
+        </style>
+    {% endif %}

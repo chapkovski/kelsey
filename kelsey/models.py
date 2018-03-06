@@ -106,11 +106,14 @@ class Subsession(BaseSubsession):
 class Group(BaseGroup):
     pass
 
+
 CONFIDENT_CHOICES = ['Very Confident',
                      'Confident',
                      'Somewhat Unconfident',
                      'Unconfident',
                      ]
+
+
 class Player(BasePlayer):
     consent = models.BooleanField(widget=djforms.CheckboxInput,
                                   initial=False
@@ -171,6 +174,8 @@ class Player(BasePlayer):
             else:
                 self.stage3_payoff = Constants.lotteryB['high']
 
+
+
     def set_final_payoff(self):
         self.round_to_pay_part1 = random.randint(1, Constants.first_half)
         self.round_to_pay_part2 = random.randint(Constants.second_half, Constants.num_rounds)
@@ -178,7 +183,8 @@ class Player(BasePlayer):
             self.round_to_pay_part2).temporary_payoff
         self.set_lottery_payoffs()
         self.payoff += self.stage3_payoff
-        # block of survey questions:
+
+    # block of survey questions:
 
     gender = models.CharField(verbose_name='Gender', choices=['Male', 'Female', 'Other'],
                               widget=widgets.RadioSelectHorizontal, )
@@ -219,8 +225,6 @@ class Player(BasePlayer):
                                     widget=widgets.RadioSelect, )
     recommendations = models.CharField(verbose_name='Do you have any recommendations for improvements?',
                                        blank=True)
-
-
 
     random_contract = models.CharField(
         verbose_name='How confident were you that the experimenters truly randomized the payoff of each contract based on the stated probabilities?',
