@@ -121,11 +121,11 @@ mturk_hit_settings = {
 
 participation_fee_in_points = 62
 real_world_currency_per_point = 0.5
-participation_fee = participation_fee_in_points * real_world_currency_per_point
+participation_fee = 7.0
 
 SESSION_CONFIG_DEFAULTS = {
     'real_world_currency_per_point': real_world_currency_per_point,
-    'participation_fee_in_points': participation_fee_in_points,
+    # 'participation_fee_in_points': participation_fee_in_points,
     'participation_fee': participation_fee,
     'doc': "",
     'mturk_hit_settings': mturk_hit_settings,

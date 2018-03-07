@@ -119,9 +119,10 @@ def instr_and_payoff_vars(session):
         show_rate = '{} cents'.format(round(rate * 100))
     else:
         show_rate = '${}'.format(rate)
-    return {'part_fee_in_points': c(session.config['participation_fee_in_points']),
-            'show_rate': show_rate,
-            }
+    return {
+        # 'part_fee_in_points': c(session.config['participation_fee_in_points']),
+        'show_rate': show_rate,
+    }
 
 
 class Instr1(FirstRoundPage):
