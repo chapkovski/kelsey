@@ -87,11 +87,31 @@ mturk_hit_settings = {
     'expiration_hours': 6,  # 7 days
     # 'grant_qualification_id': 'YOUR_QUALIFICATION_ID_HERE',# to prevent retakes
     'qualification_requirements': [
-        qualification.LocaleRequirement("EqualTo", "US"),
-        qualification.PercentAssignmentsApprovedRequirement("GreaterThanOrEqualTo", 90),
-        qualification.NumberHitsApprovedRequirement("GreaterThanOrEqualTo", 100),
-        # qualification.Requirement('YOUR_QUALIFICATION_ID_HERE', 'DoesNotExist')
-    ]
+        {
+            'QualificationTypeId': "00000000000000000071",
+            'Comparator': "EqualTo",
+            'LocaleValues': [{
+                'Country': "US",
+            }]
+        },
+        {
+            'QualificationTypeId': "000000000000000000L0",
+            'Comparator': "GreaterThanOrEqualTo",
+            "IntegerValues": [90],
+        },
+        {
+            'QualificationTypeId': "00000000000000000040",
+            'Comparator': "GreaterThanOrEqualTo",
+            "IntegerValues": [100],
+        },
+    ],
+
+    #     [
+    #     qualification.LocaleRequirement("EqualTo", "US"),
+    #     qualification.PercentAssignmentsApprovedRequirement("GreaterThanOrEqualTo", 90),
+    #     qualification.NumberHitsApprovedRequirement("GreaterThanOrEqualTo", 100),
+    #     # qualification.Requirement('YOUR_QUALIFICATION_ID_HERE', 'DoesNotExist')
+    # ]
 }
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
