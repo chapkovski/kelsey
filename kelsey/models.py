@@ -174,8 +174,6 @@ class Player(BasePlayer):
             else:
                 self.stage3_payoff = Constants.lotteryB['high']
 
-
-
     def set_final_payoff(self):
         self.round_to_pay_part1 = random.randint(1, Constants.first_half)
         self.round_to_pay_part2 = random.randint(Constants.second_half, Constants.num_rounds)
@@ -254,7 +252,7 @@ class Player(BasePlayer):
                  'Extremely Unpleasant', ],
         widget=widgets.RadioSelectHorizontal, )
 
-    thinking = models.CharField(
+    thinking = models.TextField(
         verbose_name="""Please try to describe what you were thinking when you were making decisions 
         during the study.  What factors entered your decisions? And why did you make the choices you did?""",
         blank=True)
@@ -262,3 +260,7 @@ class Player(BasePlayer):
     stage3_chosen_lottery = models.IntegerField()
     stage3_picked_number = models.IntegerField()
     stage3_payoff = models.CurrencyField(doc='field to store Stage 3 payoff')
+    general_comments = models.TextField(doc='general comments about the study - mostly for pilot',
+                                        verbose_name='Please share with us any comments or '
+                                                     'questions you have in a course of the study',
+                                        blank=True, null=True)

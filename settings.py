@@ -78,18 +78,18 @@ oTree games
 # https://boto.readthedocs.org/en/latest/ref/mturk.html?highlight=mturk#module-boto.mturk.qualification
 
 mturk_hit_settings = {
-    'keywords': ['easy', 'bonus', 'choice', 'study'],
-    'title': 'Title for your experiment',
-    'description': 'Description for your experiment',
+    'keywords': ['survey'],
+    'title': 'Academic Experiment & Survey, earn between $7 and $31',
+    'description': 'Participate in 30 minute experiment & survey',
     'frame_height': 500,
     'preview_template': 'global/MTurkPreview.html',
-    'minutes_allotted_per_assignment': 60,
-    'expiration_hours': 7 * 24,  # 7 days
+    'minutes_allotted_per_assignment': 90,
+    'expiration_hours': 6,  # 7 days
     # 'grant_qualification_id': 'YOUR_QUALIFICATION_ID_HERE',# to prevent retakes
     'qualification_requirements': [
-        # qualification.LocaleRequirement("EqualTo", "US"),
-        # qualification.PercentAssignmentsApprovedRequirement("GreaterThanOrEqualTo", 50),
-        # qualification.NumberHitsApprovedRequirement("GreaterThanOrEqualTo", 5),
+        qualification.LocaleRequirement("EqualTo", "US"),
+        qualification.PercentAssignmentsApprovedRequirement("GreaterThanOrEqualTo", 90),
+        qualification.NumberHitsApprovedRequirement("GreaterThanOrEqualTo", 100),
         # qualification.Requirement('YOUR_QUALIFICATION_ID_HERE', 'DoesNotExist')
     ]
 }
