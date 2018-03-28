@@ -1,11 +1,11 @@
 number,qname,verbose,option1,option2,correct,treatment
-1,q3_T0,What are your earnings for the round in the previous example if the payoff is {hpayoff} and you chose to pay the initial investment cost ({initial})?,16,12,16,T0
-2,q2_T0,What are your earnings for the round in the previous example if the payoff is {lpayoff} and you choose to pay the initial investment cost ({initial})?,-9,-16,-16,T0
-3,q1_T0,What are your earnings for the round in the previous example if you choose not to pay the initial investment cost ({initial})?,-6,0,0,T0
+1,q3_T0,What are your earnings for the round in the previous example if the payoff is {hpayoff} and you chose to pay the initial investment cost ({initial})?,20,10,20,T0
+2,q2_T0,What are your earnings for the round in the previous example if the payoff is {lpayoff} and you choose to pay the initial investment cost ({initial})?,0,-25,-25,T0
+3,q1_T0,What are your earnings for the round in the previous example if you choose not to pay the initial investment cost ({initial})?,-25,0,0,T0
 4,q1_T1,Would you be able to release the payoff by paying the final investment cost if you do not pay the initial investment cost?,No,Yes,No,T1
-5,q2_T1,"What would have been your earnings for the round in the previous example if the payoff were {hpayoff}, and you had chosen to pay both the initial investment cost ({initial}) and the final investment cost ({final})?",6,16,16,T1
-6,q3_T1,"What would have been your earnings for the round in the previous example if the payoff were {lpayoff}, and you had chosen to pay both the initial investment cost ({initial}) and the final investment cost ({final})?",6,-16,-16,T1
-7,q4_T1,"What would have been your earnings in this round if you chose to pay only the initial investment cost ({initial}), but not the final investment cost?",12,-9,-9,T1
-8,q1_T2,What are your earnings for the round in the previous example if the payoff is {hpayoff} and you chose to pay the initial investment cost ({initial}) and the final investment cost ({final})?,16,6,16,T2
-9,q2_T2,What are your earnings for the round in the previous example if the payoff is {lpayoff} and you chose to pay the initial investment cost ({initial}) and the final investment cost ({final})?,-16,-5,-16,T2
-10,q3_T2,What are your earnings for the round in the previous example if you choose not to pay the initial investment cost ({initial}) and the final investment cost ({final})?,-6,0,0,T2
+5,q2_T1,"What would have been your earnings for the round in the previous example if the payoff were {hpayoff}, and you had chosen to pay both the initial investment cost ({initial}) and the final investment cost ({final})?",45,20,20,T1
+6,q3_T1,"What would have been your earnings for the round in the previous example if the payoff were {lpayoff}, and you had chosen to pay both the initial investment cost ({initial}) and the final investment cost ({final})?",-70,-40,-70,T1
+7,q4_T1,"What would have been your earnings in this round if you chose to pay only the initial investment cost ({initial}), but not the final investment cost?",-25,0,-25,T1
+8,q1_T2,What are your earnings for the round in the previous example if the payoff is {hpayoff} and you chose to pay the initial investment cost ({initial}) and the final investment cost ({final})?,20,10,20,T2
+9,q2_T2,What are your earnings for the round in the previous example if the payoff is {lpayoff} and you chose to pay the initial investment cost ({initial}) and the final investment cost ({final})?,-50,-70,-70,T2
+10,q3_T2,What are your earnings for the round in the previous example if you choose not to pay the initial investment cost ({initial}) and the final investment cost ({final})?,0,-20,0,T2

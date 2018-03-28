@@ -119,8 +119,8 @@ mturk_hit_settings = {
 # the session config can be accessed from methods in your apps as self.session.config,
 # e.g. self.session.config['participation_fee']
 
-participation_fee_in_points = 62
-real_world_currency_per_point = 0.5
+
+real_world_currency_per_point = 0.01
 participation_fee = 7.0
 
 SESSION_CONFIG_DEFAULTS = {

@@ -26,9 +26,9 @@ class Constants(BaseConstants):
     first_half = 1
     second_half = first_half + 1
     assert first_half <= num_rounds, "SOMETHING WRONG WITH NUMBER OF ROUNDS!"
-    p = 0.7  # probability of low payoff
-    initial_cost = 9
-    final_cost = 15
+    p = 0.5  # probability of low payoff
+    initial_cost = 25
+    final_cost = 45
     treatments = ['T1', 'T2']
     lottery_choices = sorted(list(range(0, 101, 10)) + [5, 25, 75, 95])
     len_lottery = len(lottery_choices[1:-1])
@@ -43,15 +43,15 @@ class Constants(BaseConstants):
         'T2': """Do you want to pay an initial investment cost of {} and a final investment
      cost of {} to release the randomly determined payoff?""".format(c(initial_cost), c(final_cost)),
     }
-    low_payoff_set = [0, 6, 12]
-    high_payoff_set = [24, 36, 54]
+    low_payoff_set = [0, 18, 36]
+    high_payoff_set = [90, 108, 126]
     payoffs_sets = list(product(low_payoff_set, high_payoff_set))
     # values for control questions:
-    q_parameters = {'initial_cost': 9,
-                    'final_cost': 15,
-                    'high_payoff': 40,
-                    'low_payoff': 8,
-                    'PT0ExampleHigh': 16,
+    q_parameters = {'initial_cost': initial_cost,
+                    'final_cost': final_cost,
+                    'high_payoff': 90,
+                    'low_payoff': 0,
+                    'PT0ExampleHigh': 20,
                     'PT0ExampleLow': -16,
                     }
     for key, value in q_parameters.items():
@@ -79,7 +79,6 @@ def weighted_choice(a, b):
 
 class Subsession(BaseSubsession):
     def before_session_starts(self):
-
         first_half = self.session.config.get('first_half', 'T0')
         random_treatment = self.session.config.get('second_half') == 'random'
         second_half = self.session.config.get('second_half', 'T0')
@@ -115,6 +114,7 @@ CONFIDENT_CHOICES = ['Very Confident',
 
 
 class Player(BasePlayer):
+    vars_dump = models.TextField(doc='to store participant vars')
     consent = models.BooleanField(widget=djforms.CheckboxInput,
                                   initial=False
                                   )
@@ -159,6 +159,7 @@ class Player(BasePlayer):
                 - Constants.initial_cost + self.investment_payoff - Constants.final_cost)
 
     def set_lottery_payoffs(self):
+
         random_lottery = random.randint(1, Constants.len_lottery)
         self.stage3_chosen_lottery = random_lottery
         stage3decision = json.loads(str(self.stage3decision))

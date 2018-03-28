@@ -217,6 +217,7 @@ class Task3(LastPage):
                 lottery_choices[int(k[8:])] = v
         self.player.stage3decision = json.dumps(dict(OrderedDict(lottery_choices)))
         self.player.set_final_payoff()
+        self.player.vars_dump=json.dumps(self.participant.vars)
 
 
 class ShowPayoff(LastPage):
@@ -245,19 +246,19 @@ class ShowPayoff(LastPage):
 
 
 page_sequence = [
-    Consent,
-    Instr1,
-    Instr2,
-    Instr3,
-    Example,
+    # Consent,
+    # Instr1,
+    # Instr2,
+    # Instr3,
+    # Example,
     Q,
     QResults,
-    Separ,
-    InitialInvestment,
-    FinalInvestment,
-    Results,
-    Survey,
-    BeforeTask3,
-    Task3,
-    ShowPayoff,
+    # Separ,
+    # InitialInvestment,
+    # FinalInvestment,
+    # Results,
+    # Survey,
+    # BeforeTask3,
+    # Task3,
+    # ShowPayoff,
 ]
