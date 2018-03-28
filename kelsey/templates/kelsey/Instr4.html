@@ -7,36 +7,34 @@
 
 {% block inner_content %}
 
-{% if player.treatment == 'T0' %}
+    {% if player.treatment == 'T0' %}
 
 
-{% elif player.treatment == 'T1' %}
-      <p>If you choose not to pay the initial investment cost, the
-        net earnings for that round will be zero. If that round
-        gets selected for payment, your final earnings will not go up or down.
+    {% elif player.treatment == 'T1' %}
+        <p>If you choose not to pay the initial investment cost, the
+            net earnings for that round will be zero. If that round
+            gets selected for payment, your final earnings will not go up or down.
         </p><p>If you choose to pay the initial investment cost and
         choose not to pay the final investment cost to release
         the payoff, your earnings from that round will be:</p>
-      <p>0 – initial inv cost</p>
-      <p>If you choose to pay the initial investment cost and to
-         pay the final investment cost to release the payoff,
-         your earnings from that round will be:</p>
-      <p>0 – initial inv cost + payoff – final inv cost</p>
-{% elif player.treatment == 'T2' %}
-      If you choose not to pay the initial investment cost and
-      the final investment cost, the net earnings for that round
-       will be zero. If that round gets selected for payment,
+        <p>0 – initial inv cost</p>
+        <p>If you choose to pay the initial investment cost and to
+            pay the final investment cost to release the payoff,
+            your earnings from that round will be:</p>
+        <p>0 – initial inv cost + payoff – final inv cost</p>
+    {% elif player.treatment == 'T2' %}
+        If you choose not to pay the initial investment cost and
+        the final investment cost, the net earnings for that round
+        will be zero. If that round gets selected for payment,
         your final earnings will not go up or down.
-      If you choose to pay the initial and final investment
-      costs, the earnings for that round will be determined
-      by which payoff is chosen according to the stated probabilities.
-      Specifically, if you decide to pay the initial and
-      final investment costs, you will earn:
-      0 – initial inv cost + payoff – final inv cost
-{% endif %}
-<p>If that round gets selected for payment,
-   your earnings from this contract will be combined
-    with your show up fee.</p>
+        If you choose to pay the initial and final investment
+        costs, the earnings for that round will be determined
+        by which payoff is chosen according to the stated probabilities.
+        Specifically, if you decide to pay the initial and
+        final investment costs, you will earn:
+        0 – initial inv cost + payoff – final inv cost
+    {% endif %}
+
     {% next_button %}
 
 

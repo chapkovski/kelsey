@@ -78,11 +78,7 @@
                     <p>
                         The random number generator has determined that the payoff for this investment
                         is {{ player.investment_payoff|c }}.
-                        {% if show_payoff_in_modal %}
-                            Remember that at the end of the entire session, two contracts will be chosen for pay, one
-                            from each Part. If this contract is chosen, it will contribute
-                            {{ player.temporary_payoff|c }}.
-                        {% endif %}
+
                     </p>
 
                     <div class="modal-footer">

@@ -43,6 +43,7 @@ class Constants(BaseConstants):
         'T2': """Do you want to pay an initial investment cost of {} and a final investment
      cost of {} to release the randomly determined payoff?""".format(c(initial_cost), c(final_cost)),
     }
+    wallet = c(1000)  # initial wallet
     low_payoff_set = [0, 18, 36]
     high_payoff_set = [90, 108, 126]
     payoffs_sets = list(product(low_payoff_set, high_payoff_set))
@@ -114,6 +115,7 @@ CONFIDENT_CHOICES = ['Very Confident',
 
 
 class Player(BasePlayer):
+    game_payoff=models.CurrencyField(doc='for ingame payoffs only')
     vars_dump = models.TextField(doc='to store participant vars')
     consent = models.BooleanField(widget=djforms.CheckboxInput,
                                   initial=False
@@ -128,9 +130,7 @@ class Player(BasePlayer):
         investment cost of ${} to
          release this payoff?""".format(Constants.final_cost)
     )
-    temporary_payoff = models.CurrencyField(initial=0,
-                                            doc="""its where we store the copies of our payoffs, 
-            because we delete the payoffs in the very last round for randomization""")
+
     round_to_pay_part1 = models.IntegerField(min=1, max=Constants.first_half,
                                              doc='Random number defining payoff for the first part of the game')
     round_to_pay_part2 = models.IntegerField(min=Constants.second_half, max=Constants.num_rounds,
@@ -148,15 +148,17 @@ class Player(BasePlayer):
 
     def set_payoffs(self):
         if self.treatment == 'T0':
-            self.temporary_payoff = self.first_decision * (-Constants.initial_cost +
-                                                           max(self.investment_payoff - Constants.final_cost, 0))
+            self.payoff = self.first_decision * (-Constants.initial_cost +
+                                                 max(self.investment_payoff - Constants.final_cost, 0))
         if self.treatment == 'T1':
-            self.temporary_payoff = self.first_decision * (-Constants.initial_cost +
-                                                           (self.investment_payoff - Constants.final_cost) *
-                                                           self.second_decision)
+            self.payoff = self.first_decision * (-Constants.initial_cost +
+                                                 (self.investment_payoff - Constants.final_cost) *
+                                                 self.second_decision)
         if self.treatment == 'T2':
-            self.temporary_payoff = self.first_decision * (
+            self.payoff = self.first_decision * (
                 - Constants.initial_cost + self.investment_payoff - Constants.final_cost)
+        # to store the game_payoffs only
+        self.game_payoff = self.payoff
 
     def set_lottery_payoffs(self):
 
@@ -176,12 +178,10 @@ class Player(BasePlayer):
                 self.stage3_payoff = Constants.lotteryB['high']
 
     def set_final_payoff(self):
-        self.round_to_pay_part1 = random.randint(1, Constants.first_half)
-        self.round_to_pay_part2 = random.randint(Constants.second_half, Constants.num_rounds)
-        self.payoff = self.in_round(self.round_to_pay_part1).temporary_payoff + self.in_round(
-            self.round_to_pay_part2).temporary_payoff
+        # TODO: include wallet calculations here
         self.set_lottery_payoffs()
         self.payoff += self.stage3_payoff
+        self.payoff += Constants.wallet
 
     # block of survey questions:
 

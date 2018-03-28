@@ -7,10 +7,12 @@
 
 {% block inner_content %}
     <div class="well well-lg">
-        As stated in the instructions, your final payoff includes your show up fee ({{ part_fee_in_points }}) plus your
+        As stated in the instructions, your final payoff includes your show up fee
+        ({{ session.config.participation_fee }}) plus your
         earned points
-        from two randomly selected rounds: one from Part 1 and one from Part 2. The points of these two rounds and the
-        show up fee were added together and then converted to dollars at a rate of {{ show_rate }} per point. In
+        from all rounds. The points of all rounds are converted to dollars at a rate of {{ show_rate }} per point and
+        added to the
+        show up fee. In
         addition, you
         earned some additional points from the compensated survey questions. These points will be converted to dollars
         using the same rate.
@@ -30,15 +32,16 @@
             <td>{{ session.config.participation_fee }}</td>
         </tr>
         <tr>
-            <td>The random round selected for payment in Part 1 was <strong>#{{ player.round_to_pay_part1 }}</strong>
+            <td>Initial wallet:</strong>
             </td>
-            <td>{{ payoff_p1 }}</td>
-            <td>{{ payoff_p1_us }}</td>
+            <td></td>
+            <td>{{ wallet }}</td>
         </tr>
         <tr>
-            <td>The random round selected for payment in Part 2 was <strong>#{{ player.round_to_pay_part2 }}</strong></td>
-            <td>{{ payoff_p2 }}</td>
-            <td>{{ payoff_p2_us }}</td>
+            <td>Total earnings in all {{ Constants.num_rounds }} rounds:</strong>
+            </td>
+            <td>{{ total_game_earnings }}</td>
+            <td>{{ real_total_game_earnings }}</td>
         </tr>
         <tr>
             <td>The randomly selected lottery in the Compensated Survey Questions was

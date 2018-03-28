@@ -116,11 +116,16 @@ class Consent(FirstRoundPage):
 def instr_and_payoff_vars(session):
     rate = session.config['real_world_currency_per_point']
     if rate < 1:
-        show_rate = '{} cents'.format(round(rate * 100))
+        currate = round(rate * 100)
+        if currate == 1:
+            ending = ''
+        else:
+            ending = 's'
+        show_rate = '{} cent{}'.format(currate, ending)
     else:
         show_rate = '${}'.format(rate)
     return {
-        # 'part_fee_in_points': c(session.config['participation_fee_in_points']),
+        'wallet': Constants.wallet.to_real_world_currency(session),
         'show_rate': show_rate,
     }
 
@@ -217,7 +222,7 @@ class Task3(LastPage):
                 lottery_choices[int(k[8:])] = v
         self.player.stage3decision = json.dumps(dict(OrderedDict(lottery_choices)))
         self.player.set_final_payoff()
-        self.player.vars_dump=json.dumps(self.participant.vars)
+        self.player.vars_dump = json.dumps(self.participant.vars)
 
 
 class ShowPayoff(LastPage):
@@ -226,21 +231,16 @@ class ShowPayoff(LastPage):
 
     def vars_for_template(self):
         vars_payoff = instr_and_payoff_vars(self.session)
-        payoff_p1 = self.player.in_round(self.player.round_to_pay_part1).temporary_payoff
-        payoff_p2 = self.player.in_round(self.player.round_to_pay_part2).temporary_payoff
-        payoff_p1_us = payoff_p1.to_real_world_currency(self.session)
-        payoff_p2_us = payoff_p2.to_real_world_currency(self.session)
+        total_game_earnings = sum([p.game_payoff for p in self.player.in_all_rounds()])
         stage3decision = json.loads(str(self.player.stage3decision))
         lottery_payoff_us = self.player.stage3_payoff.to_real_world_currency(self.session)
         vars_payoff.update({'lottery_decision': stage3decision[str(self.player.stage3_chosen_lottery)],
                             'participant_payoff_points': c(
                                 self.participant.payoff_plus_participation_fee() / self.session.config[
                                     'real_world_currency_per_point']),
-                            'payoff_p1': payoff_p1,
-                            'payoff_p2': payoff_p2,
-                            'payoff_p1_us': payoff_p1_us,
-                            'payoff_p2_us': payoff_p2_us,
                             'lottery_payoff_us': lottery_payoff_us,
+                            'total_game_earnings': total_game_earnings,
+                            'real_total_game_earnings': total_game_earnings.to_real_world_currency(self.session),
                             })
         return vars_payoff
 
@@ -251,14 +251,14 @@ page_sequence = [
     # Instr2,
     # Instr3,
     # Example,
-    Q,
-    QResults,
+    # Q,
+    # QResults,
     # Separ,
     # InitialInvestment,
     # FinalInvestment,
     # Results,
     # Survey,
     # BeforeTask3,
-    # Task3,
+    Task3,
     # ShowPayoff,
 ]
