@@ -20,20 +20,20 @@ Kelsey-Oliva lottery game
 class Constants(BaseConstants):
     name_in_url = 'kelsey'
     players_per_group = None
-    num_rounds = 2
+    num_rounds = 4
     # till what round we play T0 and then change to whatever treatment
     # we have?::
-    first_half = 1
+    first_half = 2
     second_half = first_half + 1
     assert first_half <= num_rounds, "SOMETHING WRONG WITH NUMBER OF ROUNDS!"
     p = 0.5  # probability of low payoff
-    initial_cost = 25
-    final_cost = 45
+    initial_cost = c(25)
+    final_cost = c(45)
     treatments = ['T1', 'T2']
     lottery_choices = sorted(list(range(0, 101, 10)) + [5, 25, 75, 95])
     len_lottery = len(lottery_choices[1:-1])
-    lotteryA = c(2.50)
-    lotteryB = {'low': c(2), 'high': c(4)}
+    lotteryA = c(125)
+    lotteryB = {'low': c(100), 'high': c(200)}
     first_decision_labels = {
         'T0': """Do you want to pay an initial investment cost of {}  with the final
     investment cost determined based on what value payoff
@@ -115,7 +115,7 @@ CONFIDENT_CHOICES = ['Very Confident',
 
 
 class Player(BasePlayer):
-    game_payoff=models.CurrencyField(doc='for ingame payoffs only')
+    game_payoff = models.CurrencyField(doc='for ingame payoffs only')
     vars_dump = models.TextField(doc='to store participant vars')
     consent = models.BooleanField(widget=djforms.CheckboxInput,
                                   initial=False
@@ -127,8 +127,8 @@ class Player(BasePlayer):
     first_decision = models.BooleanField()
     second_decision = models.BooleanField(
         verbose_name="""Do you want to pay the final
-        investment cost of ${} to
-         release this payoff?""".format(Constants.final_cost)
+        investment cost of {} to
+         release this payoff?""".format(c(Constants.final_cost))
     )
 
     round_to_pay_part1 = models.IntegerField(min=1, max=Constants.first_half,
