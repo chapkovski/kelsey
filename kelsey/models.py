@@ -30,6 +30,7 @@ class Constants(BaseConstants):
     initial_cost = c(25)
     final_cost = c(45)
     treatments = ['T1', 'T2']
+    random_treatments = ['T0', 'T1']
     lottery_choices = sorted(list(range(0, 101, 10)) + [5, 25, 75, 95])
     len_lottery = len(lottery_choices[1:-1])
     lotteryA = c(125)
@@ -80,12 +81,18 @@ def weighted_choice(a, b):
 
 class Subsession(BaseSubsession):
     def before_session_starts(self):
-        first_half = self.session.config.get('first_half', 'T0')
-        random_treatment = self.session.config.get('second_half') == 'random'
-        second_half = self.session.config.get('second_half', 'T0')
-        for p in self.session.get_participants():
-            if random_treatment:
-                p.vars.setdefault('treatment', random.choice(Constants.treatments))
+        if self.round_number == 1:
+            random_treatment = self.session.config.get('treatment_order') == 'random'
+            for p in self.session.get_participants():
+                if self.session.config.get('treatments'):
+                    treatments = self.session.config.get('treatments')
+                else:
+                    treatments = Constants.random_treatments.copy()
+                if random_treatment:
+                    random.shuffle(treatments)
+                p.vars.setdefault('first_treatment', treatments[0])
+                p.vars.setdefault('second_treatment', treatments[1])
+
         for p in self.get_players():
             curpayoffset = (Constants.payoffs_sets.copy())
             random.shuffle(curpayoffset)
@@ -95,12 +102,9 @@ class Subsession(BaseSubsession):
             p.high_payoff = p.participant.vars['payoffsets'][i][1]
             p.investment_payoff = weighted_choice(p.low_payoff, p.high_payoff)
             if p.round_number <= Constants.first_half:
-                p.treatment = first_half
+                p.treatment = p.participant.vars['first_treatment']
             else:
-                if random_treatment:
-                    p.treatment = p.participant.vars.get('treatment')
-                else:
-                    p.treatment = second_half
+                p.treatment = p.participant.vars['second_treatment']
 
 
 class Group(BaseGroup):

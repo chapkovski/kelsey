@@ -1,4 +1,4 @@
-<p>In Part {% if player.treatment == 'T0' %}1{% else %}2{% endif %},
+<p>In Part {% if view.round_number == 1 %}1{% else %}2{% endif %},
     each round gives you a choice over an investment contract
     with the following elements. The values associated with
     these elements will change from round to round.
@@ -38,7 +38,7 @@
 
 
     {% if player.treatment == 'T0' %}
-        <li>If the <span class="warning">payoff</span> is greater than the <span
+        <li>{% if view.round_number > 1 %}Notice that, unlike in the last Part, if {% else %} If {% endif %}  the <span class="warning">payoff</span> is greater than the <span
                 class="success">final investment cost</span>,
             then the <span class="success">final investment cost</span> will be automatically charged
             and you will earn the <span class="warning">payoff</span>. This is the amount that will be added to your
@@ -72,9 +72,10 @@
     {% elif player.treatment == 'T1' %}
 
         <li>You will choose whether or not to pay the <span class="success">final investment cost</span>
-            in order to release the <span class="warning">payoff</span>. Notice that, unlike in the last Part, you now
+            in order to release the <span class="warning">payoff</span>.
+            {% if view.round_number > 1 %}Notice that, unlike in the last Part, you  now
             have to make a decision about whether to pay the final investment cost, which will happen after you learn
-            the payoffs.
+            the payoffs. {% endif %}
         </li>
         <li>If you choose to pay the <span class="info">initial investment cost</span>
             and to pay the <span class="success">final investment cost</span>
@@ -106,7 +107,8 @@
     {% else %}
         <li>The <span class="warning">payoff</span> will be released
             and the <span class="success">final investment cost</span>
-            will be automatically charged. Notice that, unlike in the last Part, you now will make a decision about
+            will be automatically charged. {% if view.round_number > 1 %}Notice that, unlike in the last Part,
+                you {% else %} You {% endif %}  now will make a decision about
             whether to pay both the initial and the final investment cost. You will make both of these decisions at the
             same time, before you know the payoffs. This is the amount that will be added to your show up fee and
             earnings in the other part of the

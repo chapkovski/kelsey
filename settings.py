@@ -135,40 +135,25 @@ SESSION_CONFIGS = [
 
     {
         'name': 'kelsey_random',
-        'display_name': 'random (T1, T2)',
+        'display_name': 'random (T0, T1)',
         'num_demo_participants': 1,
         'app_sequence': ['kelsey'],
-        'second_half': 'random'
+        'treatment_order': 'random'
+
     },
     {
         'name': 'kelseyT0T1',
         'display_name': 'T0-T1',
         'num_demo_participants': 1,
         'app_sequence': ['kelsey'],
-        'second_half': 'T1'
+        'treatments': ['T0', 'T1']
     },
     {
-        'name': 'kelseyT0T2',
-        'display_name': 'T0-T2',
+        'name': 'kelseyT1T0',
+        'display_name': 'T1-T0',
         'num_demo_participants': 1,
         'app_sequence': ['kelsey'],
-        'second_half': 'T2'
-    },
-    {
-        'name': 'kelseyT1T1',
-        'display_name': 'T1-T1',
-        'num_demo_participants': 1,
-        'app_sequence': ['kelsey'],
-        'first_half': 'T1',
-        'second_half': 'T1'
-    },
-    {
-        'name': 'kelseyT2T2',
-        'display_name': 'T2-T2',
-        'num_demo_participants': 1,
-        'app_sequence': ['kelsey'],
-        'first_half': 'T2',
-        'second_half': 'T2'
+        'treatments': ['T1', 'T0']
     },
 
 ]
