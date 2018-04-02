@@ -20,7 +20,8 @@
 
 
         <li class="list-group-item">
-            With {{ p }}% probability, you will receive {{ Constants.q_parameters.low_payoff|c }}.
+            With {{ p }}% probability, you will receive {{ Constants.q_parameters.low_payoff|c }}
+             (the low payoff will be drawn with {{ p }}% probability).
             Since the payoff of {{ Constants.q_parameters.low_payoff|c }} is less than the
             final investment cost of {{ Constants.q_parameters.final_cost|c }},
             you will not be charged the final investment cost.
