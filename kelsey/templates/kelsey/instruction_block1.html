@@ -38,10 +38,12 @@
 
 
     {% if player.treatment == 'T0' %}
-        <li>{% if view.round_number > 1 %}Notice that, unlike in the last Part, if {% else %} If {% endif %}  the <span class="warning">payoff</span> is greater than the <span
+        <li>{% if view.round_number > 1 %}Notice that, unlike in the last Part, if {% else %} If {% endif %}  the <span
+                class="warning">payoff</span> is greater than the <span
                 class="success">final investment cost</span>,
-            then the <span class="success">final investment cost</span> will be automatically charged
-            and you will earn the <span class="warning">payoff</span>. This is the amount that will be added to your
+            then the <span class="success">final investment cost</span> will be <strong>automatically </strong>charged
+            and you will earn the <span class="warning">payoff</span>. The investment costs and payoff that will be
+            added to your
             show up fee and earnings in the other part of the experiment:
         </li>
         <div class="panel panel-default">
@@ -74,13 +76,21 @@
         <li>You will choose whether or not to pay the <span class="success">final investment cost</span>
             in order to release the <span class="warning">payoff</span>.
             {% if view.round_number > 1 %}Notice that, unlike in the last Part, you  now
-            have to make a decision about whether to pay the final investment cost, which will happen after you learn
-            the payoffs. {% endif %}
-        </li>
-        <li>If you choose to pay the <span class="info">initial investment cost</span>
-            and to pay the <span class="success">final investment cost</span>
-            to release the <span class="warning">payoff</span>, this is the amount that will be added to your show up
-            fee and earnings in the other part of the experiment:
+                have to make a decision about whether to pay the final investment cost, which will happen
+                only after you
+                learn
+                the payoffs.  If you choose to pay the initial investment cost and choose to pay the final investment
+                cost to release the payoff (after learning the payoff amount), the investment costs and payoff will be
+                added to your show up fee and earnings in the other part of the experiment:
+
+            {% else %}
+                If you choose to pay the <span class="info">initial investment cost</span>
+                and to pay the <span class="success">final investment cost</span>
+                to release the <span class="warning">payoff</span>, the investment costs and payoff that will be added
+                to
+                your show up
+                fee and earnings in the other part of the experiment:
+            {% endif %}
         </li>
         <div class="panel panel-default">
             <div class="panel-body pagination-centered text-center">
@@ -107,7 +117,8 @@
     {% else %}
         <li>The <span class="warning">payoff</span> will be released
             and the <span class="success">final investment cost</span>
-            will be automatically charged. {% if view.round_number > 1 %}Notice that, unlike in the last Part,
+            will be <strong>automatically</strong> charged. {% if view.round_number > 1 %}Notice that, unlike in the
+                last Part,
                 you {% else %} You {% endif %}  now will make a decision about
             whether to pay both the initial and the final investment cost. You will make both of these decisions at the
             same time, before you know the payoffs. This is the amount that will be added to your show up fee and
