@@ -220,6 +220,7 @@ class Task3(LastPage):
             if k[:8] == 'lottery_':
                 lottery_choices[int(k[8:])] = v
         self.player.stage3decision = json.dumps(dict(OrderedDict(lottery_choices)))
+        self.player.set_lottery_payoffs()
         self.player.set_final_payoff()
         self.player.vars_dump = json.dumps(self.participant.vars)
 
