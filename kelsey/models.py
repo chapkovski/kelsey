@@ -20,10 +20,10 @@ Kelsey-Oliva lottery game
 class Constants(BaseConstants):
     name_in_url = 'kelsey'
     players_per_group = None
-    num_rounds = 4
+    num_rounds = 18
     # till what round we play T0 and then change to whatever treatment
     # we have?::
-    first_half = 2
+    first_half = 9
     second_half = first_half + 1
     assert first_half <= num_rounds, "SOMETHING WRONG WITH NUMBER OF ROUNDS!"
     p = 0.5  # probability of low payoff
@@ -155,9 +155,10 @@ class Player(BasePlayer):
             self.payoff = self.first_decision * (-Constants.initial_cost +
                                                  max(self.investment_payoff - Constants.final_cost, 0))
         if self.treatment == 'T1':
+            sec_dec = self.second_decision if self.second_decision is not None else 0
             self.payoff = self.first_decision * (-Constants.initial_cost +
-                                                 (self.investment_payoff - Constants.final_cost) *
-                                                 self.second_decision)
+                                                 (self.investment_payoff - Constants.final_cost) * sec_dec
+                                                 )
         if self.treatment == 'T2':
             self.payoff = self.first_decision * (
                 - Constants.initial_cost + self.investment_payoff - Constants.final_cost)

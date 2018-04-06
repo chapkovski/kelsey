@@ -32,13 +32,13 @@
     {% endif %}
 
 
-    <li>If you choose the pay the <span class="info">cost</span>, a random number generator will determine
+    <li class="indent3">If you choose the pay the <span class="info">cost</span>, a random number generator will determine
         the exact <span class="warning">payoff</span> according to the stated <span class="danger">chances</span>.
     </li>
 
 
     {% if player.treatment == 'T0' %}
-        <li>{% if view.round_number > 1 %}Notice that, unlike in the last Part, if {% else %} If {% endif %}  the <span
+        <li  class="indent3">{% if view.round_number > 1 %}Notice that, unlike in the last Part, if {% else %} If {% endif %}  the <span
                 class="warning">payoff</span> is greater than the <span
                 class="success">final investment cost</span>,
             then the <span class="success">final investment cost</span> will be <strong>automatically </strong>charged
@@ -57,7 +57,7 @@
             </div>
         </div>
 
-        <li>If the <span class="warning">payoff</span> is less
+        <li class="indent3">If the <span class="warning">payoff</span> is less
             than the <span class="success">final investment cost</span>, then you will not be
             charged the <span class="success">final investment cost</span> and you will not earn the <span
                     class="warning">payoff</span>. This is the amount that will be added to your show up fee and
@@ -73,7 +73,7 @@
 
     {% elif player.treatment == 'T1' %}
 
-        <li>You will choose whether or not to pay the <span class="success">final investment cost</span>
+        <li class="indent3">You will choose whether or not to pay the <span class="success">final investment cost</span>
             in order to release the <span class="warning">payoff</span>.
             {% if view.round_number > 1 %}Notice that, unlike in the last Part, you  now
                 have to make a decision about whether to pay the final investment cost, which will happen
@@ -102,7 +102,7 @@
                 <button type="button" class="btn btn-success btn-lg round">Final investment cost</button>
             </div>
         </div>
-        <li>If you choose to pay the <span class="info">initial investment cost</span>
+        <li class="indent3">If you choose to pay the <span class="info">initial investment cost</span>
             and choose not to pay the <span class="success">final investment cost</span>
             to release the <span class="warning">payoff</span>, this is the amount that will be added to your show up
             fee and earnings in the other part of the experiment:
@@ -115,7 +115,7 @@
         </div>
 
     {% else %}
-        <li>The <span class="warning">payoff</span> will be released
+        <li class="indent3">The <span class="warning">payoff</span> will be released
             and the <span class="success">final investment cost</span>
             will be <strong>automatically</strong> charged. {% if view.round_number > 1 %}Notice that, unlike in the
                 last Part,
@@ -144,7 +144,11 @@
 </ul>
 
 
-
+<style>
+    .indent3{
+        margin-left:40px;
+    }
+</style>
 
 
 

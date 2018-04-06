@@ -21,13 +21,15 @@
             </tr>
             <tr class='random {% if  not prob_realized %}  {% endif %}'>
                 <td class='{% if highlighted_low %} invalid' {% endif %}
-                ' >Low: <span class="badge">{{ low_payoff|default:player.low_payoff|c }}</span></td>
+                ' >Low: <span
+                    class="badge">{{ low_payoff|default_if_none:player.low_payoff|c }}</span></td>
                 <td class='{% if highlighted_low %} invalid {% endif %}probs'>Chances the Payoff is Low: <span
                         class="badge">{{ p }}%</span></td>
             </tr>
             <tr class='random {% if not prob_realized %}  {% endif %}'>
                 <td class='{% if highlighted_high %} invalid' {% endif %}
-                ' >High: <span class="badge">{{ high_payoff|default:player.high_payoff|c }}</span></td>
+                ' >High: <span
+                    class="badge">{{ high_payoff|default_if_none:player.high_payoff|c }}</span></td>
                 <td class='{% if highlighted_high %} invalid {% endif %} probs'>Chances the Payoff is High: <span
                         class="badge">{{ p_1 }}%</span></td>
             </tr>

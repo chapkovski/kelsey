@@ -32,7 +32,8 @@
 
         <li class="list-group-item">
             with {{ p_1 }}% chance, you will
-            receive {{ Constants.q_parameters.high_payoff|c }}.
+            receive {{ Constants.q_parameters.high_payoff|c }} (the high payoff will be drawn with {{ p_1 }}%
+            probability).
             Since the payoff of {{ Constants.q_parameters.high_payoff|c }}
             is greater than the final
             investment cost of {{ Constants.q_parameters.final_cost|c }},
@@ -68,7 +69,8 @@
             <p>With {{ p }}% chance, you will receive {{ Constants.q_parameters.low_payoff }}  (the low payoff will be
                 drawn with {{ p }}% probability).</p>
             <p>With {{ p_1 }}% chance, you will
-                receive {{ Constants.q_parameters.high_payoff|c }}.</p>
+                receive {{ Constants.q_parameters.high_payoff|c }} (the high payoff will be drawn with {{ p_1 }}%
+            probability).</p>
             You will then be asked to make the following decision:
             {% include 'kelsey/example_second_decision.html' %}
 
