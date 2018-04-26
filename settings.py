@@ -81,11 +81,11 @@ mturk_hit_settings = {
     'keywords': ['survey'],
     'title': 'Academic Experiment & Survey, earn between $7 and $31',
     'description': 'Participate in 30 minute experiment & survey',
-    'frame_height': 500,
+    'frame_height': 800,
     'preview_template': 'global/MTurkPreview.html',
-    'minutes_allotted_per_assignment': 90,
-    'expiration_hours': 6,  # 7 days
-    # 'grant_qualification_id': 'YOUR_QUALIFICATION_ID_HERE',# to prevent retakes
+    'minutes_allotted_per_assignment': 180,
+    'expiration_hours': 24,  # 7 days
+    'grant_qualification_id': '38XLDN1M8EIWZ7B4AOVS2TS9EP6D3B',# to prevent retakes
     'qualification_requirements': [
         {
             'QualificationTypeId': "00000000000000000071",
@@ -103,6 +103,10 @@ mturk_hit_settings = {
             'QualificationTypeId': "00000000000000000040",
             'Comparator': "GreaterThanOrEqualTo",
             "IntegerValues": [100],
+        },
+        {
+            'QualificationTypeId': "38XLDN1M8EIWZ7B4AOVS2TS9EP6D3B",
+            'Comparator': "DoesNotExist",
         },
     ],
 
