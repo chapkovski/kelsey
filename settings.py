@@ -7,7 +7,7 @@ from boto.mturk import qualification
 import otree.settings
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
+SENTRY_DSN = 'http://2d6137799b914e1693146c5011f39030:46838e8caa374937a91b14b59ebbe164@sentry.otree.org/36'
 # the environment variable OTREE_PRODUCTION controls whether Django runs in
 # DEBUG mode. If OTREE_PRODUCTION==1, then DEBUG=False
 if environ.get('OTREE_PRODUCTION') not in {None, '', '0'}:
