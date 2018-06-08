@@ -177,7 +177,7 @@ class Player(BasePlayer):
             ranges = Constants.lottery_choices[1:-1]
             lottery_outcome = random.randint(1, 100)
             self.stage3_picked_number = lottery_outcome
-            if lottery_outcome <= ranges[random_lottery]:
+            if lottery_outcome <= ranges[random_lottery - 1]:
                 self.stage3_payoff = Constants.lotteryB['low']
             else:
                 self.stage3_payoff = Constants.lotteryB['high']
