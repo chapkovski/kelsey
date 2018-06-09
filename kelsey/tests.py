@@ -8,7 +8,7 @@ from .views import *
 
 class PlayerBot(Bot):
     def play_round(self):
-        print('IM IN ROUND {}'.format(self.round_number))
+        print('IM IN ROUND {}, TREATMENT:: {}'.format(self.round_number, self.player.treatment))
         if self.round_number == 1:
             yield (Consent, {'consent': True})
             yield Instr1

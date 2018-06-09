@@ -85,7 +85,7 @@ mturk_hit_settings = {
     'preview_template': 'global/MTurkPreview.html',
     'minutes_allotted_per_assignment': 180,
     'expiration_hours': 24,  # 7 days
-    'grant_qualification_id': '38XLDN1M8EIWZ7B4AOVS2TS9EP6D3B',# to prevent retakes
+    'grant_qualification_id': '38XLDN1M8EIWZ7B4AOVS2TS9EP6D3B',  # to prevent retakes
     'qualification_requirements': [
         {
             'QualificationTypeId': "00000000000000000071",
@@ -158,6 +158,14 @@ SESSION_CONFIGS = [
         'num_demo_participants': 1,
         'app_sequence': ['kelsey'],
         'treatments': ['T1', 'T0']
+    },
+    {
+        'name': 'T1T2random',
+        'display_name': 'Random (T1, T2)',
+        'num_demo_participants': 1,
+        'app_sequence': ['kelsey'],
+        'treatments': ['T1', 'T2'],
+        'treatment_order': 'random',
     },
 
 ]
