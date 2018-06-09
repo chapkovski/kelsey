@@ -258,7 +258,6 @@ page_sequence = [
     FinalInvestment,
     Results,
     Survey,
-    # BeforeTask3,
     Task3,
     ShowPayoff,
 ]
